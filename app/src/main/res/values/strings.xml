@@ -1,0 +1,61 @@
+<resources>
+    <string name="app_name">Easy Measure</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_login">Sign in</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password (optional)</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string-array name="gender_type">
+        <item name="women">Women</item>
+        <item name="men">Men</item>
+        <item name="boys">Boys</item>
+        <item name="girls">Girls</item>
+    </string-array>
+    <string-array name="kids_size">
+        <item name="3 to 5">3 to 5</item>
+        <item name="5 to 7">5 to 7</item>
+        <item name="7 to 9">7 to 9</item>
+        <item name="9 to 11">9 to 11</item>
+    </string-array>
+    <string-array name="adult_size">
+        <item name="32">32</item>
+        <item name="34">34</item>
+        <item name="36">36</item>
+        <item name="38">38</item>
+        <item name="40">40</item>
+        <item name="42">42</item>
+        <item name="44">44</item>
+        <item name="46">46</item>
+    </string-array>
+    <string-array name="order_type">
+        <item name="bedding">bedding</item>
+        <item name="clothing">clothing</item>
+    </string-array>
+    <string-array name="bedding_type">
+        <item name="duvet">Duvet</item>
+        <item name="pillow_case">Pillow Case</item>
+        <item name="flat_sheet">Flat Sheet</item>
+        <item name="fitted_sheet">Fitted Sheet</item>
+        <item name="night_frill">Night Frill</item>
+    </string-array>
+    <string-array name="standard_size">
+        <item name="single">Single Size</item>
+        <item name="double_size">Double SIngle</item>
+        <item name="queen_sized">Queen Sized</item>
+        <item name="king_sized">King Sized</item>
+    </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
