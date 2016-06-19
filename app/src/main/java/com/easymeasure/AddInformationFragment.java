@@ -90,12 +90,12 @@ public class AddInformationFragment extends Fragment {
         btnProceed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch (sOrderType.getSelectedItemPosition()){
+                switch (sOrderType.getSelectedItemPosition()) {
                     case 0:
-                            saveClientBeddingOrder();
+                        saveClientBeddingOrder();
                         break;
                     case 1:
-                            saveClientClothingOrder();
+                        saveClientClothingOrder();
                         break;
                 }
             }
@@ -191,7 +191,7 @@ public class AddInformationFragment extends Fragment {
         });
     }
 
-    public void saveClientBeddingOrder(){
+    public void saveClientBeddingOrder() {
         Client client = new Client();
         client.setClientName(getArguments().getString("name"));
         client.setClientGender(getArguments().getString("gender"));
@@ -205,7 +205,7 @@ public class AddInformationFragment extends Fragment {
         linen.saveEventually(new SaveCallback() {
             @Override
             public void done(ParseException e) {
-                if(e == null){
+                if (e == null) {
                     getActivity().finish();
                 }
             }

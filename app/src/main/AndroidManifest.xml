@@ -34,7 +34,11 @@
             android:name="io.fabric.ApiKey"
             android:value="a22470e0ae7cb7d4cf7e7311b0885bdbfb90d3d9" />
 
-        <activity android:name=".CreateActivity"></activity>
+        <activity android:name=".CreateActivity" />
+        <activity
+            android:name=".NavigationDrawer"
+            android:label="@string/title_activity_navigation_drawer"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

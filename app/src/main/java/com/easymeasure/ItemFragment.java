@@ -14,7 +14,6 @@ import com.easymeasure.model.Order;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
-import com.parse.ParseUser;
 
 import java.util.List;
 
@@ -67,7 +66,6 @@ public class ItemFragment extends Fragment {
             }
 
             ParseQuery<Order> query = ParseQuery.getQuery(Order.class);
-            query.whereEqualTo("created_by", ParseUser.getCurrentUser());
             query.addAscendingOrder("created_at");
             query.findInBackground(new FindCallback<Order>() {
                 @Override
@@ -77,6 +75,7 @@ public class ItemFragment extends Fragment {
                     }
                 }
             });
+
         }
         return view;
     }

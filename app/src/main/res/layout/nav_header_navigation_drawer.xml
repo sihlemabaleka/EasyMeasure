@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#25bebebe"
+    android:orientation="vertical"
+    android:paddingBottom="64dp"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="64dp"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+    <com.easymeasure.views.RoundImageView
+        android:id="@+id/profile_picture"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_centerInParent="true"
+        android:background="#142030"
+        android:paddingTop="@dimen/nav_header_vertical_spacing" />
+
+</RelativeLayout>
