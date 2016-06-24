@@ -18,6 +18,7 @@ import com.easymeasure.model.BaseClothingMeasurements;
 import com.easymeasure.model.Client;
 import com.easymeasure.model.Linen;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.SaveCallback;
 
 public class AddInformationFragment extends Fragment {
@@ -167,32 +168,33 @@ public class AddInformationFragment extends Fragment {
 
     public void saveClientClothingOrder() {
         //Create Client
-        Client client = new Client();
+        Client client = ParseObject.create(Client.class);
         client.setClientName(getArguments().getString("name"));
         client.setClientGender(getArguments().getString("gender"));
-        client.setClientSize(getArguments().toString());
+        client.setClientSize(getArguments().getString("size").toString());
 
         //Set Base Measurements
-        final BaseClothingMeasurements measurements = new BaseClothingMeasurements();
+        final BaseClothingMeasurements measurements = (BaseClothingMeasurements) ParseObject.create("BaseClothingMeasurements");
         measurements.setChest(Integer.valueOf(mChestLength.getText().toString().trim()));
         measurements.setWaist(Integer.valueOf(mWaistLength.getText().toString().trim()));
         measurements.setShoulder(Integer.valueOf(mShoulderLength.getText().toString().trim()));
         measurements.setSleeve(Integer.valueOf(mSleeveLength.getText().toString().trim()));
         measurements.setHip(Integer.valueOf(mHipsLegnth.getText().toString().trim()));
         measurements.setClient(client);
-        measurements.setClothing(true);
-        measurements.saveEventually(new SaveCallback() {
+        measurements.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
                 if (e == null) {
                     getActivity().finish();
+                } else {
+                    e.printStackTrace();
                 }
             }
         });
     }
 
     public void saveClientBeddingOrder() {
-        Client client = new Client();
+        Client client = ParseObject.create(Client.class);
         client.setClientName(getArguments().getString("name"));
         client.setClientGender(getArguments().getString("gender"));
         client.setClientSize(getArguments().getString("size"));
@@ -201,12 +203,13 @@ public class AddInformationFragment extends Fragment {
         linen.setClient(client);
         linen.setType(sBeddingType.getSelectedItem().toString().trim());
         linen.setSize();
-        linen.setClothing(false);
-        linen.saveEventually(new SaveCallback() {
+        linen.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
                 if (e == null) {
                     getActivity().finish();
+                } else {
+                    e.printStackTrace();
                 }
             }
         });

@@ -1,7 +1,7 @@
 package com.easymeasure;
 
-import android.app.Activity;
-import android.content.Intent;
+import android.content.Context;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
@@ -10,17 +10,17 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.easymeasure.model.Client;
+import com.easymeasure.model.Order;
 
 import java.util.Date;
 import java.util.List;
 
-public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder> {
+public class OrderRecyclerView extends RecyclerView.Adapter<OrderRecyclerView.ViewHolder> {
 
-    private final List<Client> mValues;
-    private Activity mContext;
+    private final List<Order> mValues;
+    private Context mContext;
 
-    public MyItemRecyclerViewAdapter(Activity context, List<Client> items) {
+    public OrderRecyclerView(Context context, List<Order> items) {
         this.mValues = items;
         this.mContext = context;
     }
@@ -35,14 +35,17 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         try {
-            Client client = mValues.get(position);
-            holder.mItem = client;
-            holder.mIdView.setText(client.getClientName());
-            holder.mContentView.setText(client.getClientGender().toString());
-            holder.mSizeView.setText(client.getClientDeaultSize().toString());
+            Order order = mValues.get(position);
+            holder.mItem = order;
+            holder.mIdView.setText(mValues.get(position).getClient().getClientName());
+            holder.mContentView.setText(order.getClient().getClientGender() + " size : " + order.getClient().getClientDeaultSize());
+            holder.btnCompleted.setText(order.getClient().getClientOrderCount() - order.getClient().getClientPendingOrderCount());
+            holder.btnPending.setText(order.getClient().getClientPendingOrderCount());
+            holder.btnTimeStamp.setText(setTimestamp(order.getClient().getUpdatedAt()));
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
     @Override
@@ -56,11 +59,11 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
                 System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS);
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public final View mView;
         public final TextView mIdView, mContentView, mSizeView;
         public Button btnCompleted, btnPending, btnTimeStamp;
-        public Client mItem;
+        public Order mItem;
 
         public ViewHolder(View view) {
             super(view);
@@ -68,14 +71,7 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
             mIdView = (TextView) view.findViewById(R.id.client_name);
             mContentView = (TextView) view.findViewById(R.id.gender);
             mSizeView = (TextView) view.findViewById(R.id.size);
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(mContext, ClientOrderDetails.class);
-                    intent.putExtra("objectId", mItem.getObjectId());
-                    mContext.startActivity(intent);
-                }
-            });
+            view.setOnClickListener(this);
         }
 
         @Override
@@ -83,5 +79,14 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
             return super.toString() + " '" + mContentView.getText() + "'";
         }
 
+        @Override
+        public void onClick(View v) {
+            Snackbar.make(v, "You clicked hommie", Snackbar.LENGTH_SHORT).setAction("cancel", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+        }
     }
 }

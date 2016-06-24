@@ -1,6 +1,8 @@
 package com.easymeasure.model;
 
+import com.parse.ParseClassName;
 
+@ParseClassName("WomenMeasurements")
 public class WomenMeasurements extends BaseClothingMeasurements {
 
     public int getSize() {

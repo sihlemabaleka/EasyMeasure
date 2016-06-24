@@ -10,86 +10,38 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
-        android:background="@android:color/white">
-
-        <com.easymeasure.views.RoundImageView
-            android:id="@+id/profile_image"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_margin="8dp"
-            android:src="#142030" />
+        android:background="@android:color/white"
+        android:paddingLeft="16dp">
 
         <TextView
             android:id="@+id/client_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/profile_image"
-            android:layout_centerHorizontal="true"
-            android:layout_margin="8dp"
-            android:text="Sihle Mabaleka"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="8dp"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <TextView
-            android:id="@+id/size_and_gender"
+            android:id="@+id/gender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/client_name"
-            android:layout_centerHorizontal="true"
-            android:layout_margin="4dp"
-            android:text="Men : Size 32"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textStyle="bold"
+            android:typeface="serif" />
 
-        <LinearLayout
-            android:id="@+id/count_layout"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/size"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/size_and_gender"
-            android:orientation="horizontal"
-            android:padding="16dp"
-            android:weightSum="3">
-
-            <Button
-                android:id="@+id/btn_completed"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:text="3 Orders\nCompleted"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/btn_pending"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:text="0 Orders\nPending"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/btn_timestamp"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:text="3 Days Ago\nLast Order"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-
-        </LinearLayout>
+            android:layout_below="@+id/gender"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <TextView
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_below="@+id/count_layout"
+            android:layout_below="@+id/size"
             android:layout_gravity="center_horizontal"
             android:layout_margin="8dp"
             android:text="click to view"

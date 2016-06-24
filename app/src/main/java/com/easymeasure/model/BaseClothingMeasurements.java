@@ -1,8 +1,13 @@
 package com.easymeasure.model;
 
-public class BaseClothingMeasurements extends ClothesBedding {
+import com.parse.ParseClassName;
+import com.parse.ParseObject;
+
+@ParseClassName("BaseClothingMeasurements")
+public class BaseClothingMeasurements extends ParseObject {
 
     public Client getClient(){ return (Client) getParseObject("client");}
+
     public void setClient(Client client){put("client", client);}
 
     public int getChest() {
