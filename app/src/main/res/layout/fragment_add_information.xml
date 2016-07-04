@@ -1,172 +1,173 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:orientation="vertical"
         android:id="@+id/holder_layout"
-        android:padding="8dp"
-        android:layout_height="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="8dp">
 
         <TextView
+            android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Order Type"
-            android:paddingTop="4dp"
-            android:textStyle="bold"
-            android:textColor="@color/colorAccent"
             android:layout_marginBottom="12dp"
-            android:id="@+id/textView" />
+            android:paddingTop="4dp"
+            android:text="Order Type"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold"
+            android:visibility="gone" />
 
         <Spinner
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:paddingTop="16dp"
-            android:paddingBottom="16dp"
-            android:layout_marginRight="4dp"
             android:id="@+id/order_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="4dp"
+            android:entries="@array/order_type"
+            android:paddingBottom="16dp"
+            android:paddingTop="16dp"
             android:spinnerMode="dropdown"
-            android:entries="@array/order_type" />
+            android:visibility="gone" />
 
         <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:paddingTop="8dp"
             android:id="@+id/clothing_layout"
-            android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="8dp">
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:paddingTop="4dp"
+                android:layout_height="wrap_content"
                 android:paddingBottom="4dp"
-                android:layout_height="wrap_content">
+                android:paddingTop="4dp">
 
                 <android.support.design.widget.TextInputEditText
+                    android:id="@+id/chest_length"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="numberDecimal"
                     android:hint="Chest/Bust length"
-                    android:id="@+id/chest_length" />
+                    android:inputType="numberDecimal" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:paddingTop="4dp"
+                android:layout_height="wrap_content"
                 android:paddingBottom="4dp"
-                android:layout_height="wrap_content">
+                android:paddingTop="4dp">
 
                 <android.support.design.widget.TextInputEditText
+                    android:id="@+id/waist_length"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="numberDecimal"
                     android:hint="Waist length"
-                    android:id="@+id/waist_length" />
+                    android:inputType="numberDecimal" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:paddingTop="4dp"
+                android:layout_height="wrap_content"
                 android:paddingBottom="4dp"
-                android:layout_height="wrap_content">
+                android:paddingTop="4dp">
 
                 <android.support.design.widget.TextInputEditText
+                    android:id="@+id/hips_length"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="numberDecimal"
                     android:hint="Hips length"
-                    android:id="@+id/hips_length" />
+                    android:inputType="numberDecimal" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:paddingTop="4dp"
+                android:layout_height="wrap_content"
                 android:paddingBottom="4dp"
-                android:layout_height="wrap_content">
+                android:paddingTop="4dp">
 
                 <android.support.design.widget.TextInputEditText
+                    android:id="@+id/shoulder_length"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="numberDecimal"
                     android:hint="Shoulder length"
-                    android:id="@+id/shoulder_length" />
+                    android:inputType="numberDecimal" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:paddingTop="4dp"
+                android:layout_height="wrap_content"
                 android:paddingBottom="4dp"
-                android:layout_height="wrap_content">
+                android:paddingTop="4dp">
 
                 <android.support.design.widget.TextInputEditText
+                    android:id="@+id/sleeve_length"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="numberDecimal"
                     android:hint="Sleeve length"
-                    android:id="@+id/sleeve_length" />
+                    android:inputType="numberDecimal" />
             </android.support.design.widget.TextInputLayout>
 
 
         </LinearLayout>
         <LinearLayout
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:orientation="vertical"
             android:id="@+id/bedding_layout"
-            android:visibility="gone"
-            android:padding="16dp">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_marginBottom="8dp"
                 android:text="Bedding Type"
-                android:layout_marginBottom="8dp" />
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <Spinner
-                android:layout_height="wrap_content"
+                android:id="@+id/bedding_type"
                 android:layout_width="match_parent"
-                android:paddingTop="16dp"
-                android:paddingBottom="16dp"
+                android:layout_height="wrap_content"
                 android:layout_marginRight="4dp"
                 android:entries="@array/bedding_type"
-                android:spinnerMode="dropdown"
-                android:id="@+id/bedding_type" />
+                android:paddingBottom="16dp"
+                android:paddingTop="16dp"
+                android:spinnerMode="dropdown" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_marginBottom="8dp"
                 android:text="Bedding Size"
-                android:layout_marginBottom="8dp" />
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <Spinner
-                android:layout_height="wrap_content"
+                android:id="@+id/bedding_size"
                 android:layout_width="match_parent"
-                android:paddingTop="16dp"
-                android:paddingBottom="16dp"
+                android:layout_height="wrap_content"
                 android:layout_marginRight="4dp"
                 android:entries="@array/standard_size"
-                android:spinnerMode="dropdown"
-                android:id="@+id/bedding_size" />
+                android:paddingBottom="16dp"
+                android:paddingTop="16dp"
+                android:spinnerMode="dropdown" />
         </LinearLayout>
 
         <Button
+            android:id="@+id/proceed"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Proceed"
-            android:visibility="gone"
-            android:textStyle="bold"
             android:background="@color/colorAccent"
+            android:text="Proceed"
             android:textColor="@android:color/white"
-            android:id="@+id/proceed" />
+            android:textStyle="bold"
+            android:visibility="gone" />
 
     </LinearLayout>
 

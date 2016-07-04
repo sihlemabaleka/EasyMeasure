@@ -16,9 +16,6 @@ import com.parse.ParseQuery;
 
 import java.util.List;
 
-/**
- * Created by geekulcha on 6/24/16.
- */
 public class ClientOrderDetails extends Activity {
 
     Intent intent;

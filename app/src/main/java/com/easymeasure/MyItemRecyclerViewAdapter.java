@@ -1,7 +1,6 @@
 package com.easymeasure;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
@@ -71,9 +70,7 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(mContext, ClientOrderDetails.class);
-                    intent.putExtra("objectId", mItem.getObjectId());
-                    mContext.startActivity(intent);
+                    mContext.getFragmentManager().beginTransaction().replace(R.id.container, ClientMeasurementDetails.newInstance(mItem.getObjectId())).addToBackStack("").commit();
                 }
             });
         }
