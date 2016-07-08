@@ -29,6 +29,9 @@
         <item name="9 to 11">9 to 11</item>
     </string-array>
     <string-array name="adult_size">
+        <item name="32">26</item>
+        <item name="34">28</item>
+        <item name="36">30</item>
         <item name="32">32</item>
         <item name="34">34</item>
         <item name="36">36</item>

@@ -2,6 +2,7 @@ package com.easymeasure;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,8 +19,9 @@ import com.parse.SaveCallback;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemFragment extends Fragment {
+public class ItemFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
+    SwipeRefreshLayout mRefreshLayout;
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
     List<Client> clients = new ArrayList<Client>();
@@ -31,8 +33,15 @@ public class ItemFragment extends Fragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
         adapter = new MyItemRecyclerViewAdapter(getActivity(), clients);
-        getClientsFromCloud();
+        mRefreshLayout = (SwipeRefreshLayout) getActivity().findViewById(R.id.swipeRefreshLayout);
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mRefreshLayout.setRefreshing(true);
+        getClientsFromCloud();
     }
 
     public void getClientsFromLocalDatastore() {
@@ -66,7 +75,7 @@ public class ItemFragment extends Fragment {
 
     public void getClientsFromCloud() {
         ParseQuery<Client> query = ParseQuery.getQuery(Client.class);
-        query.addAscendingOrder("created_at");
+        query.addDescendingOrder("created_at");
         query.findInBackground(new FindCallback<Client>() {
             @Override
             public void done(final List<Client> objects, ParseException e) {
@@ -76,17 +85,24 @@ public class ItemFragment extends Fragment {
                         @Override
                         public void done(ParseException e) {
                             if (e == null) {
+                                mRefreshLayout.setRefreshing(false);
                                 recyclerView.setAdapter(new MyItemRecyclerViewAdapter(getActivity(), objects));
                             } else {
+                                mRefreshLayout.setRefreshing(false);
                                 Toast.makeText(getActivity(), "Couldn't Load Clients", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
                 } else {
+                    mRefreshLayout.setRefreshing(false);
                     Toast.makeText(getActivity(), "No Clients...", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
+    @Override
+    public void onRefresh() {
+        getClientsFromCloud();
+    }
 }

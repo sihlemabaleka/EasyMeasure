@@ -1,29 +1,24 @@
 package com.easymeasure;
 
 import android.app.Fragment;
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.easymeasure.model.BaseClothingMeasurements;
 import com.easymeasure.model.Client;
-import com.easymeasure.model.ClothesBedding;
-import com.parse.FindCallback;
-import com.parse.ParseException;
 import com.parse.ParseQuery;
 
-import java.util.List;
-
-/**
- * Created by geekulcha on 6/28/16.
- */
 public class ClientMeasurementDetails extends Fragment {
 
     TextView mChestLength, mWaistLength, mHipsLength, mShoulderLength, mSleeveLength;
-
+    ProgressDialog pDialog;
 
     public static ClientMeasurementDetails newInstance(String objectID) {
         ClientMeasurementDetails fragment = new ClientMeasurementDetails();
@@ -43,36 +38,48 @@ public class ClientMeasurementDetails extends Fragment {
         mHipsLength = (TextView) v.findViewById(R.id.hips_length);
         mShoulderLength = (TextView) v.findViewById(R.id.shoulder_length);
         mSleeveLength = (TextView) v.findViewById(R.id.sleeve_length);
-
-        setMeasurementValues();
+        if (savedInstanceState == null)
+            new getMeasurementValues().execute();
         return v;
     }
 
-    public void setMeasurementValues() {
+    class getMeasurementValues extends AsyncTask<Void, Void, BaseClothingMeasurements> {
+        @Override
+        protected void onPreExecute() {
+            pDialog = new ProgressDialog(getActivity());
+            pDialog.setTitle("");
+            pDialog.setMessage("Just A Moment...");
+            pDialog.show();
+        }
 
-        ParseQuery user = ParseQuery.getQuery(Client.class);
-        user.whereEqualTo("objectId", getArguments().getString("objectId"));
+        @Override
+        protected BaseClothingMeasurements doInBackground(Void... params) {
+            try {
+                ParseQuery<Client> user = ParseQuery.getQuery(Client.class);
+                user.whereEqualTo("objectId", getArguments().getString("objectId"));
 
-        ParseQuery query = ParseQuery.getQuery(ClothesBedding.class);
-        query.whereMatchesQuery("client", user);
-        query.findInBackground(new FindCallback() {
-            @Override
-            public void done(List objects, ParseException e) {
-                if (e == null) {
-                    mChestLength.setText("" + ((BaseClothingMeasurements) objects.get(0)).getChest());
-                    mWaistLength.setText("" + ((BaseClothingMeasurements) objects.get(0)).getWaist());
-                    mHipsLength.setText("" + ((BaseClothingMeasurements) objects.get(0)).getHip());
-                    mShoulderLength.setText("" + ((BaseClothingMeasurements) objects.get(0)).getShoulder());
-                    mSleeveLength.setText("" + ((BaseClothingMeasurements) objects.get(0)).getSleeve());
-                } else {
-                    e.printStackTrace();
-                }
+                ParseQuery<BaseClothingMeasurements> query = ParseQuery.getQuery(BaseClothingMeasurements.class);
+                query.whereMatchesQuery("client", user);
+                return query.getFirst();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
             }
+        }
 
-            @Override
-            public void done(Object o, Throwable throwable) {
-
+        @Override
+        protected void onPostExecute(BaseClothingMeasurements baseClothingMeasurements) {
+            super.onPostExecute(baseClothingMeasurements);
+            pDialog.dismiss();
+            if (baseClothingMeasurements != null) {
+                mChestLength.setText(baseClothingMeasurements.getChest() + " cm");
+                mWaistLength.setText(baseClothingMeasurements.getWaist() + " cm");
+                mHipsLength.setText(baseClothingMeasurements.getHip() + " cm");
+                mShoulderLength.setText(baseClothingMeasurements.getShoulder() + " cm");
+                mSleeveLength.setText(baseClothingMeasurements.getSleeve() + " cm");
+            } else {
+                Toast.makeText(getActivity(), "An error occured. Please try again later", Toast.LENGTH_SHORT).show();
             }
-        });
+        }
     }
 }

@@ -6,7 +6,6 @@ import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.easymeasure.model.Client;
@@ -58,7 +57,6 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mIdView, mContentView, mSizeView;
-        public Button btnCompleted, btnPending, btnTimeStamp;
         public Client mItem;
 
         public ViewHolder(View view) {

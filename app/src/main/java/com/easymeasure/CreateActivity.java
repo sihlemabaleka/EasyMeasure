@@ -10,7 +10,7 @@ public class CreateActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create);
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().add(R.id.container, new CreateClient()).commit();
+            getFragmentManager().beginTransaction().add(R.id.container, new CreateClient()).commit();
 
         }
     }
