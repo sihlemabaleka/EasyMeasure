@@ -39,13 +39,19 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         try {
             Client client = mValues.get(position);
             holder.mItem = client;
             holder.mIdView.setText(client.getClientName());
             holder.mContentView.setText(client.getClientGender().toString());
             holder.mSizeView.setText(client.getClientDeaultSize().toString());
+            holder.btnOptions.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showPopup(holder.mItem, v, position);
+                }
+            });
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -62,7 +68,7 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
                 System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS);
     }
 
-    public void showPopup(final Client client, View v) {
+    public void showPopup(final Client client, View v, final int position) {
         PopupMenu popup = new PopupMenu(mContext, v);
         MenuInflater inflater = popup.getMenuInflater();
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -74,6 +80,7 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
                         if (e == null) {
                             object.getClient().deleteInBackground();
                             object.deleteInBackground();
+                            mValues.remove(position);
                         } else {
                             // something went wrong
                         }
@@ -103,12 +110,6 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
                 @Override
                 public void onClick(View v) {
                     mContext.getFragmentManager().beginTransaction().replace(R.id.container, ClientMeasurementDetails.newInstance(mItem.getObjectId())).addToBackStack("").commit();
-                }
-            });
-            btnOptions.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    showPopup(mItem, v);
                 }
             });
         }

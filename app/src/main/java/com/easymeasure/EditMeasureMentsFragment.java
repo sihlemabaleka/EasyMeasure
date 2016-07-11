@@ -85,7 +85,8 @@ public class EditMeasureMentsFragment extends Fragment {
         lBeddingLayout = (LinearLayout) v.findViewById(R.id.bedding_layout);
 
         pDialog = new ProgressDialog(getActivity());
-        pDialog.setTitle("Working in the background. Just a moment...");
+        pDialog.setTitle("Working in the background.");
+        pDialog.setMessage(" Just a moment...");
         pDialog.setCancelable(true);
 
         mChestLength.addTextChangedListener(mTextWatcher);
