@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,8 +18,9 @@ import com.parse.ParseQuery;
 
 public class ClientMeasurementDetails extends Fragment {
 
-    TextView mChestLength, mWaistLength, mHipsLength, mShoulderLength, mSleeveLength;
-    ProgressDialog pDialog;
+    private TextView mChestLength, mWaistLength, mHipsLength, mShoulderLength, mSleeveLength;
+    private ProgressDialog pDialog;
+    private Button btnEditl;
 
     public static ClientMeasurementDetails newInstance(String objectID) {
         ClientMeasurementDetails fragment = new ClientMeasurementDetails();
@@ -38,6 +40,8 @@ public class ClientMeasurementDetails extends Fragment {
         mHipsLength = (TextView) v.findViewById(R.id.hips_length);
         mShoulderLength = (TextView) v.findViewById(R.id.shoulder_length);
         mSleeveLength = (TextView) v.findViewById(R.id.sleeve_length);
+        btnEditl = (Button) v.findViewById(R.id.edit);
+
         if (savedInstanceState == null)
             new getMeasurementValues().execute();
         return v;
@@ -68,7 +72,7 @@ public class ClientMeasurementDetails extends Fragment {
         }
 
         @Override
-        protected void onPostExecute(BaseClothingMeasurements baseClothingMeasurements) {
+        protected void onPostExecute(final BaseClothingMeasurements baseClothingMeasurements) {
             super.onPostExecute(baseClothingMeasurements);
             pDialog.dismiss();
             if (baseClothingMeasurements != null) {
@@ -77,6 +81,23 @@ public class ClientMeasurementDetails extends Fragment {
                 mHipsLength.setText(baseClothingMeasurements.getHip() + " cm");
                 mShoulderLength.setText(baseClothingMeasurements.getShoulder() + " cm");
                 mSleeveLength.setText(baseClothingMeasurements.getSleeve() + " cm");
+
+                btnEditl.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        getFragmentManager().beginTransaction().replace(R.id.container,
+                                EditMeasureMentsFragment.newInstance(
+                                        baseClothingMeasurements.getObjectId(),
+                                        String.valueOf(baseClothingMeasurements.getChest()),
+                                        String.valueOf(baseClothingMeasurements.getWaist()),
+                                        String.valueOf(baseClothingMeasurements.getHip()),
+                                        String.valueOf(baseClothingMeasurements.getShoulder()),
+                                        String.valueOf(baseClothingMeasurements.getSleeve())
+                                )
+                        ).addToBackStack("").commit();
+                    }
+                });
+
             } else {
                 Toast.makeText(getActivity(), "An error occured. Please try again later", Toast.LENGTH_SHORT).show();
             }

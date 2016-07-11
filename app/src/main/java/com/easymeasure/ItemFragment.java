@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.easymeasure.model.Client;
@@ -23,6 +24,7 @@ public class ItemFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     SwipeRefreshLayout mRefreshLayout;
     RecyclerView recyclerView;
+    ImageButton btnRefresh;
     RecyclerView.Adapter adapter;
     List<Client> clients = new ArrayList<Client>();
 
@@ -34,6 +36,17 @@ public class ItemFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
         adapter = new MyItemRecyclerViewAdapter(getActivity(), clients);
         mRefreshLayout = (SwipeRefreshLayout) getActivity().findViewById(R.id.swipeRefreshLayout);
+        btnRefresh = (ImageButton) getActivity().findViewById(R.id.refresh);
+        btnRefresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mRefreshLayout.setRefreshing(true);
+                getClientsFromCloud();
+            }
+        });
+        mRefreshLayout.setOnRefreshListener(this);
+        mRefreshLayout.setRefreshing(true);
+        getClientsFromLocalDatastore();
         return view;
     }
 
@@ -41,7 +54,7 @@ public class ItemFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     public void onResume() {
         super.onResume();
         mRefreshLayout.setRefreshing(true);
-        getClientsFromCloud();
+        getClientsFromLocalDatastore();
     }
 
     public void getClientsFromLocalDatastore() {
@@ -54,6 +67,7 @@ public class ItemFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                     if (objects.size() > 0) {
                         clients.addAll(objects);
                         recyclerView.setAdapter(adapter);
+                        mRefreshLayout.setRefreshing(false);
                     } else {
                         getClientsFromCloud();
                     }

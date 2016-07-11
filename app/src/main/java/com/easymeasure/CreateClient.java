@@ -1,10 +1,15 @@
 package com.easymeasure;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.ProgressDialog;
+import android.content.ContentResolver;
+import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.TextInputEditText;
+import android.provider.ContactsContract;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -12,19 +17,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 
 import com.easymeasure.model.Client;
 import com.parse.ParseQuery;
 
+import java.util.ArrayList;
+
 public class CreateClient extends Fragment implements View.OnClickListener {
 
     private ProgressDialog pDialog;
     private String[] ageSizes;
-    private TextInputEditText mClientName;
+    private AutoCompleteTextView mClientName;
     private ArrayAdapter<String> adapter;
     private Button btnSave;
+    private ImageButton btnContact;
     private Spinner mGenderSpinner, mAgeSpinner;
     private TextWatcher mTextWatcher = new TextWatcher() {
 
@@ -59,7 +69,8 @@ public class CreateClient extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.ui_client_create, container, false);
         btnSave = (Button) v.findViewById(R.id.proceed);
-        mClientName = (TextInputEditText) v.findViewById(R.id.name);
+        btnContact = (ImageButton) v.findViewById(R.id.contacts);
+        mClientName = (AutoCompleteTextView) v.findViewById(R.id.name);
         mGenderSpinner = (Spinner) v.findViewById(R.id.gender_spinner);
         mAgeSpinner = (Spinner) v.findViewById(R.id.size_spinner);
         mGenderSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -103,10 +114,13 @@ public class CreateClient extends Fragment implements View.OnClickListener {
         mAgeSpinner.setAdapter(adapter);
         mAgeSpinner.setVisibility(View.VISIBLE);
 
+        addAutoComplete();
+
         mClientName.addTextChangedListener(mTextWatcher);
         checkFieldsForEmptyValues();
 
         btnSave.setOnClickListener(this);
+        btnContact.setOnClickListener(this);
 
         return v;
     }
@@ -135,7 +149,51 @@ public class CreateClient extends Fragment implements View.OnClickListener {
             case R.id.cancel:
                 getActivity().finish();
                 break;
+            case R.id.contacts:
+                Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+                startActivityForResult(intent, 1);
+                break;
         }
+    }
+
+    @Override
+    public void onActivityResult(int reqCode, int resultCode, Intent data) {
+        super.onActivityResult(reqCode, resultCode, data);
+
+        switch (reqCode) {
+            case (1):
+                getActivity();
+                if (resultCode == Activity.RESULT_OK) {
+
+                    Uri contactData = data.getData();
+                    Cursor c = getActivity().managedQuery(contactData, null, null, null, null);
+                    if (c.moveToFirst()) {
+                        mClientName.setText(c.getString(c.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME)));
+                    }
+                }
+                break;
+        }
+    }
+
+    public void addAutoComplete() {
+        ArrayList<String> nameAddressCollection = new ArrayList<String>();
+
+        ContentResolver cr = getActivity().getContentResolver();
+
+        Cursor nameCur = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
+
+        while (nameCur.moveToNext()) {
+            String name = nameCur.getString(nameCur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+            nameAddressCollection.add(name);
+        }
+        nameCur.close();
+
+        String[] contactNames = new String[nameAddressCollection.size()];
+        nameAddressCollection.toArray(contactNames);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_dropdown_item_1line, contactNames);
+        mClientName.setAdapter(adapter);
     }
 
     class checkClientAvailability extends AsyncTask<String, Void, String> {
